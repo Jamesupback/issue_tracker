@@ -1,6 +1,7 @@
+require('dotenv').config();
 const mongoose=require('mongoose');
 const {schema}=mongoose;
-const uri="mongodb://localhost:27017/issue-tracker";
+const uri=process.env.MONGO_URI;
 
 const db=mongoose.connect(uri).then(()=>{
     console.log("database connection successfull")
