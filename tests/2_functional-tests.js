@@ -74,19 +74,19 @@ suite('Functional Tests', function() {
                 assert.equal(res.body[0].status_text,"test");
                 assert.equal(res.body[0].open,true);
                 assert.isArray(res.body);
-                assert.equal(res.body.length,1);
+                assert.equal(res.body.length,2);
                 done();
             })
     })
     test("view with one filter",(done)=>{
         chai.request(server)
-            .get('/api/issues/test1001')
-            .query({created_by:'james'})
+            .get('/api/issues/test123')
+            .query({created_by:'test'})
             .end((err,res)=>{
                 assert.equal(res.status,200);
-                assert.equal(res.body[0].issue_title,"testing");
-                assert.equal(res.body[0].issue_text,"this is a text");
-                assert.equal(res.body[0].project,"test1001");
+                assert.equal(res.body[0].issue_title,"test");
+                assert.equal(res.body[0].issue_text,"test");
+                assert.equal(res.body[0].project,"test123");
                 assert.isArray(res.body);
                 assert.equal(res.body.length,1);
                 done();
@@ -95,12 +95,12 @@ suite('Functional Tests', function() {
     })
     test("multiple filter",(done)=>{
         chai.request(server)
-            .get('/api/issues/test1001')
-            .query({created_by:"johan",issue_title:"berthe scn"})
+            .get('/api/issues/test123')
+            .query({created_by:"test",issue_title:"test"})
             .end((err,res)=>{
                 assert.equal(res.status,200);
                 assert.isArray(res.body);
-                assert.equal(res.body[0].issue_text,"berhte scn mwone");
+                assert.equal(res.body[0].issue_text,"test");
                 done();
             })
     })
@@ -110,22 +110,22 @@ suite('Functional Tests', function() {
     test("update one field",(done)=>{
         chai.request(server)
             .put("/api/issues/test1002")
-            .send({_id:"657fe9a26e3992a2e59b90eb",issue_title:'updated'})
+            .send({_id:"657ffd493a00122c70e55ac1",issue_title:'updated'})
             .end((err,res)=>{
                 assert.equal(res.status,200);
                 assert.equal(res.body.result,"successfully updated");
-                assert.equal(res.body._id,"657fe9a26e3992a2e59b90eb");
+                assert.equal(res.body._id,"657ffd493a00122c70e55ac1");
                 done();
             })
     })
     test("update multiple fields",(done)=>{
         chai.request(server)
             .put("/api/issues/test1002")
-            .send({_id:"657fe9a26e3992a2e59b90eb",issue_title:"updated",created_by:"tester"})
+            .send({_id:"657ffd493a00122c70e55ac1",issue_title:"updated",created_by:"tester"})
             .end((err,res)=>{
                 assert.equal(res.status,200);
                 assert.equal(res.body.result,"successfully updated");
-                assert.equal(res.body._id,"657fe9a26e3992a2e59b90eb");
+                assert.equal(res.body._id,"657ffd493a00122c70e55ac1");
                 done();
             })
     })
@@ -188,7 +188,7 @@ suite('Functional Tests', function() {
         test("deleting an issue",(done)=>{
             chai.request(server)
                 .delete("/api/issues/test1003")
-                .send({_id:"657febde17bd3c713bcf7262"})
+                .send({_id:"658024d686edf8a39f20e70f"})
                 .end((err,res)=>{
                     assert.equal(res.status,200);
                     assert.equal(res.body.result,"successfully deleted");
